@@ -1,0 +1,27 @@
+<h2>Añadir Entrenamiento</h2>  
+<hr>
+<form (ngSubmit)="addEntrenamiento()" [formGroup]="entrenamientoForm" autocomplete="off">
+  <div class="form-group">
+    <label for="tituloEntreno" class="form-label">Titulo</label>
+    <input type="text" class="form-control" id="tituloEntreno" aria-describedby="emailHelp">
+  </div>
+  <div class="form-group">
+    <label for="descripcionEntreno" class="form-label">Descripción</label>
+    <textarea class="form-control" id="descripcionEntreno" rows="3"></textarea>
+  </div>
+
+  <hr>
+  <h3>Añadir Series</h3>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Seleccionar Ejercicio</label>
+    <select formControlName="ejercicio" class="form-selects" >
+      <option [ngValue]="ejercicio" *ngFor="let ejercicio of listaEjercicios">
+        {{ejercicio.nombre}}
+      </option>
+    </select>
+  </div>
+
+  <br>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
