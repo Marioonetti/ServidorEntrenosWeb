@@ -1,12 +1,10 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { SharedModule } from './shared/shared.module';
-import { EntrenoAppModule } from './entrenoApp/entreno-app.module';
-import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InterceptorService } from './interceptor/interceptor.service';
+import {AppComponent} from './app.component';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {InterceptorService} from './interceptor/interceptor.service';
+import {AppRoutingModule} from "./app-routing.module";
 
 
 @NgModule({
@@ -17,9 +15,6 @@ import { InterceptorService } from './interceptor/interceptor.service';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    SharedModule,
-    EntrenoAppModule
-    ,
   ],
   providers: [
     {
@@ -30,4 +25,5 @@ import { InterceptorService } from './interceptor/interceptor.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
