@@ -9,10 +9,9 @@ import { Entrenador } from '../interfaces/interfaces.component';
 export class EntrenadorService {
 
   private baseUrl: string = environment.baseUrl;
-  private id: number = 7;
+  private id: number = Number(localStorage.getItem('id'));
   
   constructor( private http: HttpClient ) {
-    //this.id = JSON.parse(localStorage.getItem('id')!) || 0;
    }
 
   addEntrenador(entrenador: Entrenador){

@@ -23,6 +23,7 @@
     "https-proxy-agent": "^5.0.1",
     "proxy-addr": "^2.0.7",
     "rxjs": "~7.5.0",
+    "sweetalert2": "^11.4.17",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

@@ -12,9 +12,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class EntrenamientosComponent implements OnInit {
 
-
-
-
   entrenamientoForm: FormGroup = this.formBuilder.group({
     ejercicio: [ ,Validators.required],
   })

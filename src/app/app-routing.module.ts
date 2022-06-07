@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core'
 import {RouterModule, Routes} from '@angular/router'
+import { ValidarTokenGuard } from './guards/validar-token.guard';
 
 
 const routes: Routes = [
@@ -11,7 +12,9 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: () => import('./entrenoApp/entreno-app.module')
-      .then(modulo => modulo.EntrenoAppModule)
+      .then(modulo => modulo.EntrenoAppModule), 
+      canActivate: [ValidarTokenGuard],
+      canLoad : [ValidarTokenGuard]
   },
   {
     path: '**',

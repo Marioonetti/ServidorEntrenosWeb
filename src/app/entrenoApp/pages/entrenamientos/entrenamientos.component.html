@@ -1,4 +1,4 @@
-<h2>Añadir Entrenamiento</h2>  
+<h2>Añadir Entrenamiento</h2>
 <hr>
 <form (ngSubmit)="addEntrenamiento()" [formGroup]="entrenamientoForm" autocomplete="off">
   <div class="form-group">
@@ -13,8 +13,8 @@
   <hr>
   <h3>Añadir Series</h3>
   <div class="form-group">
-    <label for="exampleFormControlSelect1">Seleccionar Ejercicio</label>
-    <select formControlName="ejercicio" class="form-selects" >
+    <label for="selectEjercicio">Seleccionar Ejercicio</label>
+    <select formControlName="ejercicio" class="form-select" id="selectEjercicio">
       <option [ngValue]="ejercicio" *ngFor="let ejercicio of listaEjercicios">
         {{ejercicio.nombre}}
       </option>

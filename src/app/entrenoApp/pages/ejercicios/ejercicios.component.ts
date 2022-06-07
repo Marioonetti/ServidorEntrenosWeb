@@ -57,6 +57,7 @@ ejercicio: Ejercicio = {
       console.log(ok)
     });
     this.ejercicioForm.reset();
+    this.rutaImagen =""
 
   }
 
