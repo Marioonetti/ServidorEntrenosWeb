@@ -17,9 +17,7 @@ export class SidebarComponent {
   constructor(private router: Router) { }
 
   logout(){
-    const user = localStorage.removeItem('user')
-    const password = localStorage.removeItem('password')
-    const token = localStorage.removeItem('token')
+   localStorage.clear()
     this.router.navigateByUrl('/auth')
   }
 

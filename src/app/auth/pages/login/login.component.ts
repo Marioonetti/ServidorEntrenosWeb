@@ -28,24 +28,37 @@ export class LoginComponent implements OnInit {
       this.loginForm.markAllAsTouched();
       return;
     }
+    let change: boolean=false
       localStorage.setItem('user', this.loginForm.get('username')?.value)
       localStorage.setItem('password', this.loginForm.get('password')?.value)
       this.loginService.doLogin(this.loginForm.value)
       .subscribe({
-        next(entrenador){
+        next: entrenador => {
           localStorage.setItem('id', entrenador.id +"")
+          this.router.navigateByUrl('/dashboard')
+         
         },
-        error(msg){
+        error: msg => {
           console.log(msg.console.error.mensaje);
-          
+          Swal.fire({
+            title: msg.console.error.mensaje,
+            text: 'Do you want to continue',
+            icon: 'error',
+            confirmButtonText: 'Cool'
+          })
         }
       }
       )
-      this.router.navigateByUrl('/dashboard')
+      
+
+  }
+
+  navigate(){
+
   }
 
   validarCampo(valor : string){
-    return this.loginForm.controls[valor].errors && 
+    return this.loginForm.controls[valor].errors &&
             this.loginForm.controls[valor].touched;
   }
 
