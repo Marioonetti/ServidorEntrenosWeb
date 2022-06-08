@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
     let change: boolean=false
       localStorage.setItem('user', this.loginForm.get('username')?.value)
       localStorage.setItem('password', this.loginForm.get('password')?.value)
+      
       this.loginService.doLogin(this.loginForm.value)
       .subscribe({
         next: entrenador => {
@@ -39,12 +40,10 @@ export class LoginComponent implements OnInit {
          
         },
         error: msg => {
-          console.log(msg.console.error.mensaje);
           Swal.fire({
-            title: msg.console.error.mensaje,
-            text: 'Do you want to continue',
+            title: msg.error.mensaje,
             icon: 'error',
-            confirmButtonText: 'Cool'
+            confirmButtonText: 'Ok'
           })
         }
       }

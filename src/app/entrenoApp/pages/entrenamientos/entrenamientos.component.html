@@ -1,27 +1,103 @@
 <h2>Añadir Entrenamiento</h2>
 <hr>
-<form (ngSubmit)="addEntrenamiento()" [formGroup]="entrenamientoForm" autocomplete="off">
+<form [formGroup]="entrenamientoForm" autocomplete="off">
   <div class="form-group">
     <label for="tituloEntreno" class="form-label">Titulo</label>
-    <input type="text" class="form-control" id="tituloEntreno" aria-describedby="emailHelp">
+    <input type="text" class="form-control" id="tituloEntreno" aria-describedby="emailHelp" formControlName="titulo">
+    <span class="form-text text-danger"
+          *ngIf="validarCampo('titulo')">
+            El Titulo es obligatorio
+            </span>
   </div>
   <div class="form-group">
-    <label for="descripcionEntreno" class="form-label">Descripción</label>
-    <textarea class="form-control" id="descripcionEntreno" rows="3"></textarea>
+    <label for="comentarioEntreno" class="form-label">Comentario</label>
+    <textarea class="form-control" id="comentarioEntreno" rows="3" formControlName="comentario"></textarea>
+    <span class="form-text text-danger"
+          *ngIf="validarCampo('comentario')">
+            Por favor añade un comentario
+            </span>
+  </div>
+  <div class="form-group">
+    <label for="selectUser">Usuario</label>
+    <select formControlName="idCliente" class="form-select" id="selectUser">
+      <option [ngValue]="cliente.id" *ngFor="let cliente of listaClientes">
+        {{cliente.nombre}}
+      </option>
+    </select>
+    <span class="form-text text-danger"
+          *ngIf="validarCampo('idCliente')">
+            Selecciona el Cliente
+            </span>
   </div>
 
   <hr>
   <h3>Añadir Series</h3>
-  <div class="form-group">
-    <label for="selectEjercicio">Seleccionar Ejercicio</label>
-    <select formControlName="ejercicio" class="form-select" id="selectEjercicio">
-      <option [ngValue]="ejercicio" *ngFor="let ejercicio of listaEjercicios">
-        {{ejercicio.nombre}}
-      </option>
-    </select>
-  </div>
+  <br>
+  <span class="form-text text-danger"
+        *ngIf="validarCampo('series')">
+            La Imagen de perfil es obligatoria
+            </span>
+
+  <ng-container formArrayName="series" *ngFor="let o of series.controls; let i = index">
+      <div [formGroupName]="i">
+        <div class="form-group">
+          <label for="selectEjercicio">Seleccionar Ejercicio</label>
+          <select formControlName="ejercicio" class="form-select" id="selectEjercicio">
+            <option [ngValue]="ejercicio.id" *ngFor="let ejercicio of listaEjercicios">
+              {{ejercicio.nombre}}
+            </option>
+          </select>
+        </div>
+
+        <div class="row">
+
+          <div class="form-group  col-4">
+            <label for="rir">Rir</label>
+            <input
+              type="number"
+              class="form-control"
+              id="rir"
+              formControlName="rir"
+            >
+          </div>
+
+          <div class="form-group col-4">
+            <label for="seriesRepeticiones">Series x Repeticiones</label>
+            <input
+              type="text"
+              class="form-control"
+              id="seriesRepeticiones"
+              placeholder="3 Series x 4 Repeticiones"
+              formControlName="seriesRepeticiones"
+            >
+          </div>
+            <div class="form-group col-4">
+              <label for="enfoque">Enfoque</label>
+              <select formControlName="enfoque" class="form-select" id="enfoque">
+                <option [ngValue]="enfoque" *ngFor="let enfoque of listaEnfoque">
+                  {{enfoque}}
+                </option>
+              </select>
+            </div>
+
+
+
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="col-4 d-grid mt-2 ">
+            <button type="submit" class="btn btn-primary mt-3" (click)="addSerie()">Añadir Serie</button>
+          </div>
+          <div class="col-4 d-grid mt-2 ">
+            <button type="submit" class="btn btn-danger mt-3" (click)="delSerie(i)">Eliminar Serie</button>
+          </div>
+        </div>
+
+      </div>
+
+  </ng-container>
 
   <br>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" (click)="addEntrenamiento()">Submit</button>
 </form>
 
