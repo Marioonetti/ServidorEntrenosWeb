@@ -42,7 +42,7 @@
       <div [formGroupName]="i">
         <div class="form-group">
           <label for="selectEjercicio">Seleccionar Ejercicio</label>
-          <select formControlName="ejercicio" class="form-select" id="selectEjercicio">
+          <select formControlName="idEjercicio" class="form-select" id="selectEjercicio">
             <option [ngValue]="ejercicio.id" *ngFor="let ejercicio of listaEjercicios">
               {{ejercicio.nombre}}
             </option>
