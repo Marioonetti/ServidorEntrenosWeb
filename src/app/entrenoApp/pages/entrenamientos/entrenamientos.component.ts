@@ -81,7 +81,7 @@ export class EntrenamientosComponent implements OnInit {
   serieForm(){
     return this.formBuilder.group({
       rir: [ ],
-      ejercicio: [ ] ,
+      idEjercicio: [ ] ,
       enfoque: [ ],
       seriesRepeticiones: [ ]
     })
