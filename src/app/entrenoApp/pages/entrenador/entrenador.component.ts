@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { EntrenadorService } from '../../services/entrenador.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {EntrenadorService} from '../../services/entrenador.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-entrenador',
@@ -9,52 +10,62 @@ import { EntrenadorService } from '../../services/entrenador.service';
 export class EntrenadorComponent implements OnInit {
 
   entrenadorForm: FormGroup = this.formBuilder.group({
-    username: [ ,Validators.required],
-    password: [ ,Validators.required],
-    nombre: [ ,Validators.required],
-    apellidos: [ ,Validators.required],
-    edad: [ ,Validators.required],
-    imagen: [ ,Validators.required],
-    
+    username: [, Validators.required],
+    password: [, Validators.required],
+    nombre: [, Validators.required],
+    apellidos: [, Validators.required],
+    edad: [, Validators.required],
+    imagen: [, Validators.required],
+
   })
 
-rutaImagen: string = ""
+  rutaImagen: string = ""
 
-  constructor(private formBuilder : FormBuilder, 
-    private entrenadorService: EntrenadorService) { }
+  constructor(private formBuilder: FormBuilder,
+              private entrenadorService: EntrenadorService) {
+  }
 
 
   ngOnInit(): void {
-    this.entrenadorForm.valueChanges.subscribe(({imagen}) =>
-      {
-    
-        this.rutaImagen = imagen
-      })
+    this.entrenadorForm.valueChanges.subscribe(({imagen}) => {
+      this.rutaImagen = imagen
+    })
   }
 
-  
 
-  addEntrenador(){
-    if(this.entrenadorForm.invalid){
+  addEntrenador() {
+    if (this.entrenadorForm.invalid) {
       this.entrenadorForm.markAllAsTouched();
       return;
     }
+    const formValue = {...this.entrenadorForm.value};
 
-    const formValue = { ...this.entrenadorForm.value };
-    
-
-    console.log(this.rutaImagen)
     this.entrenadorService.addEntrenador(formValue)
-    .subscribe( ok => {
-      console.log(ok)
-    });
+      .subscribe({
+        next: entrenador => {
+          Swal.fire({
+            title: 'Entrenador Añadido Correctamente',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          })
+          this.entrenadorForm.reset()
+          this.rutaImagen = ""
+        },
+        error: error => {
+          Swal.fire({
+            title: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
+        }
+      });
     this.entrenadorForm.reset();
 
   }
 
-  validarCampo(valor : string){
-    return this.entrenadorForm.controls[valor].errors && 
-            this.entrenadorForm.controls[valor].touched;
+  validarCampo(valor: string) {
+    return this.entrenadorForm.controls[valor].errors &&
+      this.entrenadorForm.controls[valor].touched;
   }
 
 }

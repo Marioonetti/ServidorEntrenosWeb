@@ -1,69 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Ejercicio } from '../../interfaces/interfaces.component';
-import { EjercicioService } from '../../services/ejercicio.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {EjercicioService} from '../../services/ejercicio.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ejercicios',
   templateUrl: './ejercicios.component.html'
 })
-export class EjerciciosComponent implements OnInit{
+export class EjerciciosComponent implements OnInit {
 
   ejercicioForm: FormGroup = this.formBuilder.group({
-    nombre: [ ,Validators.required],
-    intensidad : [, Validators.required],
-    grupoMuscular: [ ,Validators.required],
+    nombre: [, Validators.required],
+    intensidad: [, Validators.required],
+    grupoMuscular: [, Validators.required],
     descripcion: [, Validators.required],
     img: [, Validators.required]
   })
 
-rutaImagen: string = ""
+  rutaImagen: string = ""
 
-ejercicio: Ejercicio = {
-      nombre: "",
-      intensidad: "",
-      grupoMuscular: "",
-      img: "",
-      descripcion: ""
-}
-
-  constructor(private formBuilder : FormBuilder, 
-    private ejercicioService : EjercicioService) { }
+  constructor(private formBuilder: FormBuilder,
+              private ejercicioService: EjercicioService) {
+  }
 
 
   ngOnInit(): void {
-    this.ejercicioForm.valueChanges.subscribe(({img}) =>
-      {
-    
-        this.rutaImagen = img
-        console.log(this.rutaImagen)
-      })
+    this.ejercicioForm.valueChanges.subscribe(({img}) => {
+      this.rutaImagen = img
+    })
   }
 
-  
 
-  addEjercicio(){
-    if(this.ejercicioForm.invalid){
+  addEjercicio() {
+    if (this.ejercicioForm.invalid) {
       this.ejercicioForm.markAllAsTouched();
       return;
     }
 
-    const formValue = { ...this.ejercicioForm.value };
-    this.ejercicio = formValue;
-
-    console.log(this.rutaImagen)
-    this.ejercicioService.addEjercicio(this.ejercicio)
-    .subscribe( ok => {
-      console.log(ok)
-    });
+    this.ejercicioService.addEjercicio(this.ejercicioForm.value)
+      .subscribe({
+        next: ejercicio => {
+          Swal.fire({
+            title: 'Ejercicio Añadido Correctamente',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          })
+          this.ejercicioForm.reset()
+        },
+        error: error => {
+          Swal.fire({
+            title: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
+        }
+      });
     this.ejercicioForm.reset();
-    this.rutaImagen =""
+    this.rutaImagen = ""
 
   }
 
-  validarCampo(valor : string){
-    return this.ejercicioForm.controls[valor].errors && 
-            this.ejercicioForm.controls[valor].touched;
+  validarCampo(valor: string) {
+    return this.ejercicioForm.controls[valor].errors &&
+      this.ejercicioForm.controls[valor].touched;
   }
 
 }

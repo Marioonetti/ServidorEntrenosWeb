@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { Observable } from 'rxjs';
-import { Cliente } from '../interfaces/interfaces.component';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {Cliente} from '../interfaces/interfaces.component';
 
 @Injectable({
   providedIn: 'root'
@@ -10,18 +9,19 @@ import { Cliente } from '../interfaces/interfaces.component';
 export class ClienteService {
 
   private baseUrl: string = environment.baseUrl;
-  
-  constructor( private http: HttpClient ) { }
+
+  constructor(private http: HttpClient) {
+  }
 
 
-  getClientesByEntrenador(){
+  getClientesByEntrenador() {
     const idEntrenador = localStorage.getItem('id')
 
-    const url  = `${ this.baseUrl }cliente`;
+    const url = `${this.baseUrl}cliente`;
     let queryParams = new HttpParams();
-    queryParams = queryParams.append("id",idEntrenador!);
+    queryParams = queryParams.append("id", idEntrenador!);
 
-    return this.http.get<Cliente[]>(url, {params : queryParams});
+    return this.http.get<Cliente[]>(url, {params: queryParams});
   }
 
 }

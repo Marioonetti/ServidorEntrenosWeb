@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { EntrenadorService } from '../../services/entrenador.service';
-import { Entrenador } from '../../interfaces/interfaces.component';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {EntrenadorService} from '../../services/entrenador.service';
+import {Entrenador} from '../../interfaces/interfaces.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-perfil',
@@ -10,79 +11,97 @@ import { Entrenador } from '../../interfaces/interfaces.component';
 export class PerfilComponent implements OnInit {
 
   entrenadorForm: FormGroup = this.formBuilder.group({
-    username: [ ,Validators.required],
-    password: [],
-    nombre: [ ,Validators.required],
-    apellidos: [ ,Validators.required],
-    edad: [ ,Validators.required],
-    imagen: [ ,Validators.required],
-    descripcion: [ ,Validators.required],
-    
+    username: [, Validators.required],
+    nombre: [, Validators.required],
+    apellidos: [, Validators.required],
+    edad: [, Validators.required],
+    imagen: [, Validators.required],
+    descripcion: [, Validators.required],
+
   })
 
-  entrenadorUpdate : Entrenador = {
-    id : 0,
+  entrenadorUpdate: Entrenador = {
     username: "",
     password: "",
     nombre: "",
     apellidos: "",
-    edad: 0 ,
+    edad: 0,
     imagen: "",
     descripcion: "",
+    id: 0
   }
 
-  constructor(private formBuilder : FormBuilder, 
-    private entrenadorService: EntrenadorService) { }
+  constructor(private formBuilder: FormBuilder,
+              private entrenadorService: EntrenadorService) {
+  }
 
 
   ngOnInit(): void {
 
-    this.entrenadorForm.valueChanges.subscribe(form =>
-      {
-        this.entrenadorUpdate = form
-      })
+    this.entrenadorForm.valueChanges.subscribe(form => {
+      this.entrenadorUpdate = form
+    })
 
-      this.getEntrenador().subscribe( ok => {
-        console.log(ok)
-        this.entrenadorForm.patchValue({
-          username: ok.username,
-          nombre: ok.nombre,
-          apellidos: ok.apellidos,
-          edad: ok.edad ,
-          imagen: ok.imagen,
-          descripcion: ok.descripcion,
-
-        })
-
+    this.getEntrenador()
+      .subscribe({
+        next: entrenador => {
+          this.entrenadorForm.reset()
+          this.entrenadorForm.patchValue({
+            username: entrenador.username,
+            nombre: entrenador.nombre,
+            apellidos: entrenador.apellidos,
+            edad: entrenador.edad,
+            imagen: entrenador.imagen,
+            descripcion: entrenador.descripcion,
+          })
+          this.entrenadorUpdate = entrenador
+        },
+        error: error => {
+          Swal.fire({
+            title: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
+        }
       });
-  
-  
 
   }
 
 
-  getEntrenador(){
+  getEntrenador() {
     return this.entrenadorService.getEntrenador();
   }
 
 
-  updateEntrenador(){
-    if(this.entrenadorForm.invalid){
+  updateEntrenador() {
+    if (this.entrenadorForm.invalid) {
       this.entrenadorForm.markAllAsTouched();
       return;
     }
 
-    console.log(this.entrenadorUpdate)
     this.entrenadorService.updateEntrenadorInfo(this.entrenadorUpdate)
-    .subscribe( ok => {
-      console.log(ok)
-    });
+      .subscribe({
+        next: entrenamiento => {
+          Swal.fire({
+            title: 'Perfil Actualizado',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          })
+        },
+        error: error => {
+          Swal.fire({
+            title: error.error.mensaje,
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          })
+        }
+      });
 
   }
 
-  validarCampo(valor : string){
-    return this.entrenadorForm.controls[valor].errors && 
-            this.entrenadorForm.controls[valor].touched;
+  validarCampo(valor: string) {
+    return this.entrenadorForm.controls[valor].errors &&
+      this.entrenadorForm.controls[valor].touched;
   }
 
 }
