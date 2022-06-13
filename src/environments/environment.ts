@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseUrl : 'http://localhost:8080/ServidorEntrenos-1.0-SNAPSHOT/api/'
+  baseUrl : 'http://informatica.iesquevedo.es:2326/EntrenosApp/api/'
+
 };
 
 /*

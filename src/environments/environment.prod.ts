@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrl : 'http://informatica.iesquevedo.es:2326/EntrenosApp/api/'
 };
