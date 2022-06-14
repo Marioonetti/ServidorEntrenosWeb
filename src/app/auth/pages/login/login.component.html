@@ -2,9 +2,9 @@
 <div class="limiter">
     <div class="container-login100" style="background-image: url('../../../../assets/images/bg-01.jpg');">
         <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
-            
+
             <form class="login100-form" autocomplete="off" (ngSubmit)="doLogin()" [formGroup]="loginForm">
-                
+
                 <span class="login100-form-title p-b-49">
                     Login
                 </span>
@@ -12,8 +12,8 @@
                 <div class="wrap-input100 m-b-23">
                     <span class="label-input100">Usuario</span>
                     <input class="input100"
-                           type="text" 
-                           name="Usuario" 
+                           type="text"
+                           name="Usuario"
                            placeholder="Nombre de Usuario"
                            formControlName="username"
                            >
@@ -26,17 +26,17 @@
                     <span class="label-input100">Password</span>
                     <input class="input100"
                            type="password"
-                           name="password" 
+                           name="password"
                            placeholder="Contraseña"
-                           formControlName="password"
+                           formControlName="passw"
                            >
-                           <span class="form-text text-danger" *ngIf="validarCampo('password')">
+                           <span class="form-text text-danger" *ngIf="validarCampo('passw')">
                             La contraseña no puede estar vacía
                         </span>
                 </div>
-                
+
                 <div class="text-right p-t-8 p-b-31"></div>
-                
+
                 <div class="container-login100-form-btn">
                     <div class="wrap-login100-form-btn">
                         <div class="login100-form-bgbtn"></div>

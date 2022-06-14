@@ -17,7 +17,6 @@ export class LoginService {
 
 
   doLogin(user: User): Observable<Entrenador> {
-
     const url = `${this.baseUrl}login/entrenador`;
     return this.http.post<Entrenador>(url, JSON.stringify(user));
   }

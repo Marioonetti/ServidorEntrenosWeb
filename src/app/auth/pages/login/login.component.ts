@@ -12,7 +12,7 @@ export class LoginComponent {
 
   loginForm: FormGroup = this.formBuilder.group({
     username: [, Validators.required],
-    password: [, Validators.required]
+    passw: [, Validators.required]
   })
 
   constructor(private formBuilder: FormBuilder,
@@ -28,7 +28,7 @@ export class LoginComponent {
       return;
     }
     localStorage.setItem('user', this.loginForm.get('username')?.value)
-    localStorage.setItem('password', this.loginForm.get('password')?.value)
+    localStorage.setItem('password', this.loginForm.get('passw')?.value)
 
     this.loginService.doLogin(this.loginForm.value)
       .subscribe({
